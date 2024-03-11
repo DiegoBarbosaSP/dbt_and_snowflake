@@ -11,10 +11,12 @@ models:
   - name: stg_orders
     columns:
       - name: order_id
+        description: '{{doc("order_status_customers")}}'
         tests:
           - unique
           - not_null        
       - name: status
+        description: '{{doc("order_status")}}'
         tests:
           - accepted_values:
               values:
@@ -22,4 +24,9 @@ models:
                 - shipped
                 - returned
                 - return_pending
-                - placed    
+                - placed   
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id           
